@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="nav-logo">🔐 Vault</span>
+        </div>
+        <div class="nav-right">
+            <span class="nav-count">{{ passwords|length }} passwords saved</span>
+            <a href="/add" class="btn-add">+ Add Password</a>
+            <a href="/logout" class="btn-logout">🚪 Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="🔍 Search by site or username..." oninput="searchPasswords()">
+        </div>
+
+        <div class="cards-grid" id="cardsGrid">
+            {% for p in passwords %}
+            <div class="card" data-site="{{ p.site }}" data-username="{{ p.username }}">
+                <div class="card-header">
+                    <div class="site-icon">{{ p.site[0].upper() }}</div>
+                    <div class="site-info">
+                        <h3>{{ p.site }}</h3>
+                        <span class="category-badge">{{ p.category }}</span>
+                    </div>
+                    <button class="btn-delete" onclick="confirmDelete({{ p.id }})">🗑️</button>
+                </div>
+                <div class="card-body">
+                    <div class="field">
+                        <label>Username</label>
+                        <div class="field-value">
+                            <span>{{ p.username }}</span>
+                            <button onclick="copyText('{{ p.username }}')" class="btn-copy">📋</button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="field-value">
+                            <span class="password-text" id="pw-{{ p.id }}">••••••••••••</span>
+                            <button onclick="togglePassword({{ p.id }}, '{{ p.password }}')" class="btn-copy">👁️</button>
+                            <button onclick="copyText('{{ p.password }}')" class="btn-copy">📋</button>
+                        </div>
+                    </div>
+                    {% if p.notes %}
+                    <div class="field">
+                        <label>Notes</label>
+                        <div class="field-value"><span>{{ p.notes }}</span></div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if passwords|length == 0 %}
+            <div class="empty-state">
+                <div style="font-size:60px">🔒</div>
+                <h2>Your vault is empty</h2>
+                <p>Click "+ Add Password" to get started</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="toast" class="toast">✅ Copied to clipboard!</div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

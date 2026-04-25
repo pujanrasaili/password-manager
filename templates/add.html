@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Password</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="nav-logo">🔐 Vault</span>
+        </div>
+        <div class="nav-right">
+            <a href="/" class="btn-logout">← Back</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-wrapper">
+            <h2>➕ Add New Password</h2>
+            <form action="/add" method="POST" class="add-form">
+                <div class="input-group">
+                    <label>Website / App Name</label>
+                    <input type="text" name="site" placeholder="e.g. Google, Netflix" required>
+                </div>
+                <div class="input-group">
+                    <label>Username / Email</label>
+                    <input type="text" name="username" placeholder="your@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="password-input-row">
+                        <input type="text" name="password" id="passwordField" placeholder="Enter or generate password" required>
+                        <button type="button" onclick="generatePassword()" class="btn-generate">⚡ Generate</button>
+                    </div>
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <span class="strength-label" id="strengthLabel"></span>
+                </div>
+                <div class="input-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option>General</option>
+                        <option>Social Media</option>
+                        <option>Banking</option>
+                        <option>Work</option>
+                        <option>Shopping</option>
+                        <option>Entertainment</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Notes (optional)</label>
+                    <textarea name="notes" placeholder="Any extra notes..." rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-login">💾 Save Password</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

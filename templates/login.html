@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="lock-icon">🔐</div>
+            <h1>Password Manager</h1>
+            <p class="subtitle">Enter your master password to continue</p>
+            {% if error %}
+            <div class="error-msg">❌ {{ error }}</div>
+            {% endif %}
+            <form action="/login" method="POST">
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Master Password" required autofocus>
+                </div>
+                <button type="submit" class="btn-login">🔓 Unlock Vault</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
